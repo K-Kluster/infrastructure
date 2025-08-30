@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: indexer
+  namespace: kaspa
+spec:
+  serviceName: prod-indexer
+  selector:
+    matchLabels:
+      app: prod-indexer
+  template:
+    metadata:
+      labels:
+        app: prod-indexer
+    spec:
+      containers:
+        - name: indexer
+          env:
+            - name: NETWORK_TYPE
+              value: 'mainnet'
+            - name: KASPA_NODE_WBORSH_URL
+              value: 'ws://prod-kaspad.kaspa.svc.cluster.local:17110'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: indexer
+  labels:
+    app: prod-indexer
+  namespace: kaspa
+spec:
+  selector:
+    app: prod-indexer

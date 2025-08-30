@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kasia-fyi
+  namespace: cert-manager
+spec:
+  secretName: kasia-fyi
+  issuerRef:
+    kind: ClusterIssuer
+    name: kasia-fyi-letsencrypt-prod
+  commonName: "*.kasia.fyi"
+  dnsNames:
+    - "*.kasia.fyi"
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "kube-system"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"

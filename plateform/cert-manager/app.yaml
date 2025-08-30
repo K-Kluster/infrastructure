@@ -1,0 +1,15 @@
+# included by apps (app-of-apps pattern)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  project: kluster
+  source:
+    repoURL: git@github.com:K-Kluster/instrastructure.git
+    targetRevision: main
+    path: plateform/cert-manager
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager

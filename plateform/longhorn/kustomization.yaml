@@ -1,0 +1,6 @@
+namespace: longhorn
+
+resources:
+  - ./longhorn.yaml
+  - ./longhorn-dashboard.yaml
+  - ./basic-auth-middleware.yaml

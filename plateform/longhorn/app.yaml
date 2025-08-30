@@ -1,0 +1,15 @@
+# included by apps (app-of-apps pattern)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argocd
+spec:
+  project: kluster
+  source:
+    repoURL: git@github.com:Kluster/infrastructure.git
+    targetRevision: main
+    path: plateform/longhorn
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: longhorn

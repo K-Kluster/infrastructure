@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: indexer-external
+  labels:
+    app: indexer
+  namespace: kaspa
+spec:
+  type: ClusterIP
+  selector:
+    app: indexer
+  ports:
+    - name: wrpc-borsh
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: indexer
+  namespace: kaspa
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`indexer.kasia.fyi`)
+      kind: Rule
+      services:
+        - name: indexer-external
+          kind: Service
+          port: 8080
+  tls: {}

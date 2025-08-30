@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kaspad-mainnet
+  namespace: argocd
+spec:
+  destination:
+    namespace: kaspa
+    server: https://kubernetes.default.svc
+  project: kluster
+  source:
+    path: app/node/mainnet
+    repoURL: git@github.com:K-Kluster/infrastructure.git
+    targetRevision: main

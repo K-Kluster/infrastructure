@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspad-external
+  labels:
+    app: kaspad
+  namespace: kaspa
+spec:
+  type: ClusterIP
+  selector:
+    app: kaspad
+  ports:
+    - name: wrpc-borsh
+      port: 17110
+      targetPort: 17110
+      protocol: TCP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kaspad
+  namespace: kaspa
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`wrpc.kasia.fyi`)
+      kind: Rule
+      services:
+        - name: kaspad-external
+          kind: Service
+          port: 17110
+  tls: {}

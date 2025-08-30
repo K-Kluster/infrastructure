@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kaspad
+  namespace: kaspa
+spec:
+  serviceName: dev-kaspad
+  selector:
+    matchLabels:
+      app: dev-kaspad
+  template:
+    metadata:
+      labels:
+        app: dev-kaspad
+    spec:
+      containers:
+        - name: kaspad
+          args:
+            - kaspad
+            - --yes
+            - --nologfiles
+            - --disable-upnp
+            - --utxoindex
+            - --testnet
+            - --netsuffix=10
+            - --rpclisten=0.0.0.0:16110
+            - --rpclisten-borsh=0.0.0.0:17110
+            - --rpclisten-json=0.0.0.0:18112
+            - --externalip=78.47.96.208
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspad
+  namespace: kaspa
+  labels:
+    app: dev-kaspad
+spec:
+  selector:
+    app: dev-kaspad

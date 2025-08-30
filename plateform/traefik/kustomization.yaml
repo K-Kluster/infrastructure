@@ -1,0 +1,8 @@
+resources:
+  - ./dashboard.yaml
+  - ./tls-store.yaml
+  - ./traefik-helm-chart-config.yaml
+  - ./basic-auth-middleware.yaml
+
+generators:
+  - ./secret-generator.yaml

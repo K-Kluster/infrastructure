@@ -1,0 +1,17 @@
+namespace: argocd
+
+resources:
+  - ./namespace.yaml
+  - ./argocd.yaml
+  - ./ingress-ui.yaml
+  - ./kluster-project.yaml
+#- ./argocd-image-updater.yaml
+
+patches:
+  - path: ./argocd-cm.yaml
+  - path: ./argo-cd-repo-server-ksops-patch.yaml
+  - path: ./argocd-cmd-params-cm-patch.yml
+  #- path: ./argocd-image-updater-cm.yaml
+
+generators:
+  - ./secret-generator.yaml

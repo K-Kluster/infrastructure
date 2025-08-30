@@ -1,0 +1,16 @@
+# included by apps (app-of-apps pattern)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+spec:
+  project: kluster
+  source:
+    repoURL: git@github.com:K-Kluster/infrastructure.git
+    targetRevision: main
+    path: plateform/traefik
+  destination:
+    server: https://kubernetes.default.svc
+    # traefik is provided as part of the kube-system namespace
+    namespace: kube-system

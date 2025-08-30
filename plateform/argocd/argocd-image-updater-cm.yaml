@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-image-updater-config
+data:
+  registries.conf: |
+    registries:
+    - name: Kluster Registry
+      default: true
+      api_url: https://registry.kasia.fyi
+      prefix: registry.kasia.fyi
+      credentials: pullsecret:argocd/kasiareg
+  # log.level can be one of trace, debug, info, warn or error
+  log.level: trace

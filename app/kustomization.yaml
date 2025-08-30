@@ -1,0 +1,8 @@
+resources:
+  - namespace.yaml
+  # Kaspa Nodes
+  - ./node/mainnet/app.yaml
+  - ./node/testnet/app.yaml
+  # Indexers
+  - ./indexer/mainnet/app.yaml
+  - ./indexer/testnet/app.yaml

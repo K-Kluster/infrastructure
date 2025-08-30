@@ -1,0 +1,10 @@
+# overriding it causes issues
+# https://github.com/cert-manager/cert-manager/issues/5471#issuecomment-1279132822
+# namespace: cert-manager
+resources:
+  - ./cert-manager.yaml
+  - ./kasia-issuer.yaml
+  - ./kasia-certificate-wildcard.yaml
+
+generators:
+  - ./secret-generator.yaml

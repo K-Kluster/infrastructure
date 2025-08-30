@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sops-age
+  namespace: argocd
+type: Opaque
+data:
+  keys.txt: ENC[AES256_GCM,data:FbKkfwYJYGqo3yFSjeKe5Ntki62XhQM0sYWWi9z9BkfJDNUvWSccJTQnRDOzwpu6jfjcxih1Wc3KBc/OTChLzXKpUMPZny5bPOmqDk7yQ6OPIz0BCZLx+QIQ932q//4OHMQnHseNC1dx9kX69GNCsl93lMV6+roX+Z38Fe3kBQFCnbrnbVzz1TjGXzWvgf7fCwUQFQFyQxPSShRmXTEPC2PYaqrEb3NLV+IkbWhOw5gkdOjIvC7U7GC8pdwF,iv:EHJoU16nKM5utV4aVNBYA7EPv0rSWlNcJ2mKr5+EC+o=,tag:WOkUgdwjIEXBHESf4+z20A==,type:str]
+sops:
+  age:
+    - recipient: age1wk2gy8cquajzw70pzt9jlg0az96yzg5mzagj82m4098p59zju4qq3kyc6z
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA1MmVWbXFGbVFMaGlhdEpE
+        VnRvNkR4NFNlakQwaFNqMkhTbnRmK1dUOUcwCkdORGNlb2hyd2c0dmVPSHZIU2Jr
+        cUFYWU8ySm9KS05mK2tNSmhwNXo4VW8KLS0tIE5OK05CKzVSNm5ONWNrc0VYcEFh
+        NU9aN2JrUEIwbEJraWtncjRpQUw1czQKnAlkyg9Q4cVaMq0IA0R95GoScpmkN1Fz
+        YqbAN95igZIFC8oYMXFePuCmKrAC2iQpWSnne6LpzF3ZxnL1Ub3FaQ==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-08-30T12:55:45Z"
+  mac: ENC[AES256_GCM,data:WRcdHgj47WbeLkyHMmqxMvEIWdD5/LHiubUjlf54iuY8R+rFD7ba4OsCRKpU6YzUqNMEbqJOiARpsCkn2e0/PIvyMK/Ykh26sAQ9CEqgcUA8mIRxiQIBdtMkEtICUnanpSkBmN24qbf02otX/XM7aSE22SK2a1seyXbRQNVtoqM=,iv:lReiQODCv4Zjqx9nmZ8+NZELxXD/WQE/7Ub6exFB2d0=,tag:qu1e04gsb5w4/+FawkvJOw==,type:str]
+  unencrypted_regex: ^(apiVersion|metadata|kind|type)$
+  version: 3.10.2

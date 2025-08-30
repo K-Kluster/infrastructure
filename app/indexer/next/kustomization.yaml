@@ -1,0 +1,8 @@
+resources:
+  - ../base
+
+patches:
+  - path: ./patch-ingress.yaml
+  - path: ./patch-indexer-sts.yaml
+
+namePrefix: next-

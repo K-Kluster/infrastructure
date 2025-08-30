@@ -1,0 +1,18 @@
+# https://github.com/K-Kluster/instrastructure
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: kluster
+  namespace: argocd
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Kluster Project
+  # Allow manifest to be deployed only from this repository
+  sourceRepos:
+    - "https://github.com/K-Kluster/instrastructure.git"
+  destinations:
+    # only allow to deploy on this cluster, but in any namespaces
+    - namespace: "*"
+      server: https://kubernetes.default.svc

@@ -1,0 +1,3 @@
+resources:
+  - ./kaspad.yaml
+  - ./ingress.yaml

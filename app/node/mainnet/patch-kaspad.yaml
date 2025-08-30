@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kaspad
+  namespace: kaspa
+spec:
+  serviceName: prod-kaspad
+  selector:
+    matchLabels:
+      app: prod-kaspad
+  template:
+    metadata:
+      labels:
+        app: prod-kaspad
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspad
+  namespace: kaspa
+  labels:
+    app: prod-kaspad
+spec:
+  selector:
+    app: prod-kaspad

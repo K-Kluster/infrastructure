@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app
+  namespace: argocd
+spec:
+  destination:
+    namespace: app
+    server: https://kubernetes.default.svc
+  project: kluster
+  source:
+    path: app
+    repoURL: git@github.com:K-Kluster/infrastructure.git
+    targetRevision: main
