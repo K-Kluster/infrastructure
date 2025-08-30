@@ -16,7 +16,7 @@ A declarative infrastructure repository that defines the entire Kasia platform a
 ## Repository Overview
 
 ```text
-instrastructure/
+infrastructure/
 ├── app/                     # Application layer (Kaspa node & indexer)
 │   ├── indexer/             # Base + overlays for mainnet, next, testnet
 │   └── node/                # Base + overlays for mainnet and testnet
@@ -62,8 +62,8 @@ instrastructure/
 ### 1) Clone and configure secrets
 
 ```bash
-git clone https://github.com/K-Kluster/instrastructure.git
-cd instrastructure
+git clone https://github.com/K-Kluster/infrastructure.git
+cd infrastructure
 
 # Point SOPS to your AGE private key
 export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt

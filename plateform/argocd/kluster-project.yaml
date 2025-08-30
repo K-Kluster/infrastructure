@@ -1,4 +1,4 @@
-# https://github.com/K-Kluster/instrastructure
+# https://github.com/K-Kluster/infrastructure
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
@@ -11,7 +11,7 @@ spec:
   description: Kluster Project
   # Allow manifest to be deployed only from this repository
   sourceRepos:
-    - "https://github.com/K-Kluster/instrastructure.git"
+    - "https://github.com/K-Kluster/infrastructure.git"
   destinations:
     # only allow to deploy on this cluster, but in any namespaces
     - namespace: "*"
