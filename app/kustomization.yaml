@@ -1,5 +1,6 @@
 resources:
   - namespace.yaml
+  - ./app.yaml
   # Kaspa Nodes
   - ./node/mainnet/app.yaml
   - ./node/testnet/app.yaml
