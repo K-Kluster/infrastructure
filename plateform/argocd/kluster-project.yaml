@@ -16,3 +16,6 @@ spec:
     # only allow to deploy on this cluster, but in any namespaces
     - namespace: "*"
       server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
