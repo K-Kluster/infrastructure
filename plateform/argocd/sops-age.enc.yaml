@@ -3,9 +3,6 @@ apiVersion: v1
 metadata:
     name: sops-age
     namespace: argocd
-    uid: 6e4afc40-d466-4590-9f4b-6a89ccef2009
-    resourceVersion: "1083479"
-    creationTimestamp: "2025-08-30T15:00:33Z"
 data:
     keys.txt: ENC[AES256_GCM,data:NdyTUUJpSERPgCSxs8beA3cLHXIP6xs8vP2v70kDiM/78q0J0MU1WRzpG4EEPENafOnwiFKwFxriSK2ThNEf16bTBl+3coPNvxOiJcMfp8zSmyw5caP63uSbdYdAfqJfeFxg6CHpalNyvODutkGZGSVaPVepuTr0QAzmm7M7hIkxQEJPbY+F+mCC6Ileyc3EikJJ4iADQy9e/LkfF6HxdDCiXbtvS2DT9ylDP+tlSX/pdT1qieU1/myWVYct3gFGOITIs+3Dk4xX0L7tIDAy8KECtbce//dHDKxmInW2aELRfrTFSLIBaCiF8qttZporsCQFNCHbT9Y9KYyU,iv:OaUWoXTOQyDSWMPIMgI1PUlI/IvD0m7mlu6cQ573OWM=,tag:ll0bYBlbVpRcQGGmHTLc9w==,type:str]
 type: Opaque
@@ -20,7 +17,7 @@ sops:
             NU9aN2JrUEIwbEJraWtncjRpQUw1czQKnAlkyg9Q4cVaMq0IA0R95GoScpmkN1Fz
             YqbAN95igZIFC8oYMXFePuCmKrAC2iQpWSnne6LpzF3ZxnL1Ub3FaQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-08-30T15:01:03Z"
-    mac: ENC[AES256_GCM,data:PcD0wtRor44gHYLMl++rVht/qtGCKPbYKreGEkI4o8ON4pYTKikn/Fqa9pI25D9NwC/Ecuu3bXenyophjN67+HE91WjovIbjvmcWbWq/SrzS7WY1VxRgKm7GcxChCFQ9Jfb4QHanf3jaYeWOcCEJ57aIb9LW1+KR2Cs53E2k4+g=,iv:NUrCaDBiz5ocZH/dGQkc8+QxliIFGAgC7f6Jv3n7NRY=,tag:WF1FsCsEEIhxjdUwHTQK1w==,type:str]
+    lastmodified: "2025-08-30T16:02:00Z"
+    mac: ENC[AES256_GCM,data:0oH54qeWTHEj5Bi6yVTnHrsiy0qxAanQ/GQx5XyheOIg88AJEndh5reJiLsirvF/suuWlmqj8NVwnjk0AWRL3/zaN3IbRn3cp6tqnRIIrx2BZcBJQpJRessunQHu1QfP3e+XGohv3ZRm61wvNGfTT4QOlqXS1JqJhiD90SQ0nbw=,iv:CzRMYV+RgO5QloSSNpOxTI3NgaD70oMmc0DPrJ4yJt0=,tag:Xc/9tgJfigMp7ttV+9VCtA==,type:str]
     unencrypted_regex: ^(apiVersion|metadata|kind|type)$
     version: 3.10.2
