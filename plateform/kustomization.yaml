@@ -3,3 +3,5 @@ resources:
   - ./argocd/app.yaml
   - ./cert-manager/app.yaml
   - ./traefik/app.yaml
+  - ./system/app.yaml
+  - ./longhorn/app.yaml
