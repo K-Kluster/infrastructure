@@ -5,7 +5,8 @@ resources:
   - ./argocd.yaml
   - ./ingress-ui.yaml
   - ./kluster-project.yaml
-#- ./argocd-image-updater.yaml
+  - ./app.yaml
+  #- ./argocd-image-updater.yaml
 
 patches:
   - path: ./argocd-cm.yaml

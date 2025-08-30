@@ -10,5 +10,5 @@ spec:
   project: kluster
   source:
     path: app
-    repoURL: git@github.com:K-Kluster/infrastructure.git
+    repoURL: https://github.com/K-Kluster/instrastructure.git
     targetRevision: main
