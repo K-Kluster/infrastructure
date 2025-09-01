@@ -5,3 +5,5 @@ resources:
   - ./traefik/app.yaml
   - ./system/app.yaml
   - ./longhorn/app.yaml
+  - ./minio/app.yaml
+  - ./minio/operator.yaml

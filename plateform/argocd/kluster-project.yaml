@@ -12,6 +12,8 @@ spec:
   # Allow manifest to be deployed only from this repository
   sourceRepos:
     - "https://github.com/K-Kluster/infrastructure.git"
+    # minio operator
+    - "https://github.com/minio/operator.git"
   destinations:
     # only allow to deploy on this cluster, but in any namespaces
     - namespace: "*"

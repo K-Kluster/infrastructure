@@ -1,15 +1,14 @@
-# included by apps (app-of-apps pattern)
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: system
+  name: minio-app
   namespace: argocd
 spec:
   project: kluster
   source:
     repoURL: https://github.com/K-Kluster/infrastructure.git
     targetRevision: main
-    path: plateform/system
+    path: plateform/minio
   destination:
     server: https://kubernetes.default.svc
-    namespace: kube-system
+    namespace: minio

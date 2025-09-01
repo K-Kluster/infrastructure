@@ -1,0 +1,9 @@
+namespace: minio
+
+resources:
+  - ./namespace.yaml
+  - ./tenant.yaml
+  - ./tenant.config.enc.yaml
+
+generators:
+  - ./secret-generator.yaml
