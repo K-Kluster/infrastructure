@@ -1,4 +1,5 @@
 creation_rules:
-  # infra key
-  - age: >-
+  - unencrypted_regex: "^(apiVersion|metadata|kind|type)$"
+    # infra key
+    age: >-
       age1wk2gy8cquajzw70pzt9jlg0az96yzg5mzagj82m4098p59zju4qq3kyc6z
