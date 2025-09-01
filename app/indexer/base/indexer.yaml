@@ -39,11 +39,11 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: RUST_BACKTRACE
-              value: '1'
+              value: "1"
             - name: RUST_LOG
-              value: 'info'
-            - name: 'KASIA_INDEXER_DB_ROOT'
-              value: '/app/data'
+              value: "info"
+            - name: "KASIA_INDEXER_DB_ROOT"
+              value: "/app/data"
           ports:
             - name: api
               containerPort: 8080
@@ -61,11 +61,17 @@ spec:
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 20
+          startupProbe:
+            tcpSocket:
+              port: 8080
+            # 5mn for startup
+            failureThreshold: 30
+            periodSeconds: 10
   volumeClaimTemplates:
     - metadata:
         name: data
       spec:
-        accessModes: ['ReadWriteOnce']
+        accessModes: ["ReadWriteOnce"]
         storageClassName: longhorn
         resources:
           requests:
