@@ -7,3 +7,4 @@ resources:
   # Indexers
   - ./indexer/mainnet/app.yaml
   - ./indexer/testnet/app.yaml
+  - ./indexer/next/app.yaml
