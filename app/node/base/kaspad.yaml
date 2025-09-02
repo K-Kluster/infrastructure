@@ -51,7 +51,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: RUST_BACKTRACE
-              value: '1'
+              value: "1"
           # Container listens on these ports
           ports:
             - name: rpc
@@ -89,11 +89,19 @@ spec:
               port: 16110
             initialDelaySeconds: 30
             periodSeconds: 20
+          resources:
+            limits:
+              cpu: "4"
+              memory: 12Gi
+            requests:
+              cpu: "3"
+              memory: 8Gi
+
   volumeClaimTemplates:
     - metadata:
         name: data
       spec:
-        accessModes: ['ReadWriteOnce']
+        accessModes: ["ReadWriteOnce"]
         storageClassName: longhorn
         resources:
           requests:
