@@ -64,8 +64,9 @@ spec:
           startupProbe:
             tcpSocket:
               port: 8080
-            # 5mn for startup
-            failureThreshold: 30
+            # todo: should be reduced, wait for cpu optimization on startup
+            # 50mn for startup
+            failureThreshold: 300
             periodSeconds: 10
           resources:
             requests:
@@ -73,7 +74,7 @@ spec:
               cpu: "1"
             limits:
               memory: "2Gi"
-              cpu: "2"
+              cpu: "4"
   volumeClaimTemplates:
     - metadata:
         name: data
