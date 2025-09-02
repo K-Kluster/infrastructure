@@ -67,6 +67,13 @@ spec:
             # 5mn for startup
             failureThreshold: 30
             periodSeconds: 10
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "1"
+            limits:
+              memory: "2Gi"
+              cpu: "2"
   volumeClaimTemplates:
     - metadata:
         name: data
