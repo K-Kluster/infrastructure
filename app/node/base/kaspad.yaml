@@ -11,11 +11,11 @@ spec:
   selector:
     app: kaspad
   ports:
-    - name: rpc
+    - name: grpc
       port: 16110
       targetPort: 16110
       protocol: TCP
-    - name: grpc
+    - name: rpc
       port: 16111
       targetPort: 16111
       protocol: TCP
@@ -52,12 +52,16 @@ spec:
           env:
             - name: RUST_BACKTRACE
               value: "1"
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
           # Container listens on these ports
           ports:
-            - name: rpc
+            - name: grpc
               containerPort: 16110
               protocol: TCP
-            - name: grpc
+            - name: rpc
               containerPort: 16111
               protocol: TCP
             - name: wrpc-borsh
@@ -75,7 +79,7 @@ spec:
             - --rpclisten=0.0.0.0:16110
             - --rpclisten-borsh=0.0.0.0:17110
             - --rpclisten-json=0.0.0.0:18112
-            - --externalip=78.47.96.208
+            - --externalip=$(NODE_IP)
           volumeMounts:
             - name: data
               mountPath: /app/data
