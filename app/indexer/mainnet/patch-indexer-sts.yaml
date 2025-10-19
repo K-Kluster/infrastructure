@@ -22,7 +22,7 @@ spec:
               value: "ws://prod-kaspad.kaspa.svc.cluster.local:17110"
           volumeMounts:
             - name: data
-              mountPath: /var/lib/app
+              mountPath: /app/data
       volumes:
         - name: data
           persistentVolumeClaim:
