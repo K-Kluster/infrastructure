@@ -8,6 +8,9 @@ spec:
   selector:
     matchLabels:
       app: prod-indexer
+  # overwrite and use prod define pvc
+  volumeClaimTemplates:
+    - $patch: delete
   template:
     metadata:
       labels:

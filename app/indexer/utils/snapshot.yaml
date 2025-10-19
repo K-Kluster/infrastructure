@@ -10,6 +10,6 @@ spec:
     requests:
       storage: 100Gi
   dataSource:
-    name: data-prod-indexer-0
+    name: backup-prod-indexer-0
     kind: PersistentVolumeClaim
     apiGroup: ""
