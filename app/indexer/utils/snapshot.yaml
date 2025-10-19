@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: prod-data2-indexer-0
+  name: prod-data3-indexer-0
   namespace: kaspa
 spec:
   storageClassName: longhorn
