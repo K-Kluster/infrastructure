@@ -17,9 +17,16 @@ spec:
         - name: indexer
           env:
             - name: NETWORK_TYPE
-              value: 'mainnet'
+              value: "mainnet"
             - name: KASPA_NODE_WBORSH_URL
-              value: 'ws://prod-kaspad.kaspa.svc.cluster.local:17110'
+              value: "ws://prod-kaspad.kaspa.svc.cluster.local:17110"
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/app
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data2-prod-indexer-0
 ---
 apiVersion: v1
 kind: Service

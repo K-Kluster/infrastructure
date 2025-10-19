@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backup-prod-indexer-0
+  namespace: kaspa
+spec:
+  storageClassName: longhorn
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 100Gi
+  dataSource:
+    name: data-prod-indexer-0
+    kind: PersistentVolumeClaim
+    apiGroup: ""
