@@ -26,6 +26,30 @@ spec:
             - --rpclisten-borsh=0.0.0.0:17110
             - --rpclisten-json=0.0.0.0:18112
             - --externalip=78.47.96.208
+          ports:
+            - name: grpc
+              containerPort: 16112
+              protocol: TCP
+            - name: rpc
+              containerPort: 16111
+              protocol: TCP
+            - name: wrpc-borsh
+              containerPort: 17110
+              protocol: TCP
+            - name: wrpc-json
+              containerPort: 18112
+              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 16112
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 16112
+            initialDelaySeconds: 30
+            periodSeconds: 20
+
   volumeClaimTemplates:
     - metadata:
         name: data
