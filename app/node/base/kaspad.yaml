@@ -56,20 +56,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-          # Container listens on these ports
-          ports:
-            - name: grpc
-              containerPort: 16110
-              protocol: TCP
-            - name: rpc
-              containerPort: 16111
-              protocol: TCP
-            - name: wrpc-borsh
-              containerPort: 17110
-              protocol: TCP
-            - name: wrpc-json
-              containerPort: 18112
-              protocol: TCP
           args:
             - kaspad
             - --yes
