@@ -1,0 +1,24 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kaspad
+  namespace: kaspa
+spec:
+  routes:
+    - match: Host(`next-wrpc.kasia.fyi`)
+      kind: Rule
+      services:
+        - name: next-kaspad-external
+          kind: Service
+          port: 17110
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspad-external
+  namespace: kaspa
+  labels:
+    app: next-kaspad
+spec:
+  selector:
+    app: next-kaspad

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kaspad
+  namespace: kaspa
+spec:
+  serviceName: next-kaspad
+  selector:
+    matchLabels:
+      app: next-kaspad
+  template:
+    metadata:
+      labels:
+        app: next-kaspad
+    spec:
+      containers:
+        - name: kaspad
+          image: kkluster/rusty-kaspa:vspcv2
+          args:
+            - kaspad
+            - --yes
+            - --nologfiles
+            - --disable-upnp
+            - --utxoindex
+            - --rpclisten=0.0.0.0:16112
+            - --rpclisten-borsh=0.0.0.0:17110
+            - --rpclisten-json=0.0.0.0:18112
+            - --externalip=78.47.96.208
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 200Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspad
+  namespace: kaspa
+  labels:
+    app: next-kaspad
+spec:
+  selector:
+    app: next-kaspad
