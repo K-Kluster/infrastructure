@@ -22,3 +22,8 @@ metadata:
 spec:
   selector:
     app: next-kaspad
+  ports:
+    - name: wrpc-borsh
+      port: 17210
+      targetPort: 17210
+      protocol: TCP
