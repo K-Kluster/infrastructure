@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: kaspad
-          image: kkluster/rusty-kaspa:covpp
+          image: kkluster/rusty-kaspa@sha256:6c32e5c7ac5a5bba775b6d2b49474c97c7e0d455804e504d5c157b8221927c1d
           args:
             - kaspad
             - --yes

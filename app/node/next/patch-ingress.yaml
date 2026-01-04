@@ -5,7 +5,7 @@ metadata:
   namespace: kaspa
 spec:
   routes:
-    - match: Host(`next-wrpc.kasia.fyi`)
+    - match: Host(`tn12-wrpc.kasia.fyi`)
       kind: Rule
       services:
         - name: next-kaspad-external
