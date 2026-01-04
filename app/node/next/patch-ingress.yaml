@@ -10,7 +10,7 @@ spec:
       services:
         - name: next-kaspad-external
           kind: Service
-          port: 17110
+          port: 17210
 ---
 apiVersion: v1
 kind: Service
