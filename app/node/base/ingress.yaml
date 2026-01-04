@@ -9,11 +9,6 @@ spec:
   type: ClusterIP
   selector:
     app: kaspad
-  ports:
-    - name: wrpc-borsh
-      port: 17110
-      targetPort: 17110
-      protocol: TCP
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute

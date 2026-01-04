@@ -22,3 +22,8 @@ metadata:
 spec:
   selector:
     app: dev-kaspad
+  ports:
+    - name: wrpc-borsh
+      port: 17110
+      targetPort: 17110
+      protocol: TCP
