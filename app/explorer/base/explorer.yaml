@@ -78,7 +78,7 @@ spec:
     spec:
       containers:
         - name: kaspa-rest-server
-          image: kaspanet/kaspa-rest-server:latest
+          image: kaspanet/kaspa-rest-server@sha256:e67603a22f11d11fcdf6ddd6ab558ca255237bfe19679ac08ecac7fa591c9b60
           imagePullPolicy: IfNotPresent
           env:
             - name: KASPAD_HOST_1
