@@ -57,7 +57,7 @@ spec:
             - name: SQL_URI
               value: postgresql+asyncpg://postgres:postgres@next-kaspa-db:5432/postgres
             - name: HASHRATE_HISTORY
-              value: true
+              value: "true"
 ---
 apiVersion: v1
 kind: Service
