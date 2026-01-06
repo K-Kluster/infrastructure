@@ -1,0 +1,3 @@
+resources:
+  - ./explorer.yaml
+  - ./ingress.yaml

@@ -1,0 +1,7 @@
+resources:
+  - ../base
+
+patches:
+  - path: ./patch-explorer.yaml
+
+namePrefix: next-

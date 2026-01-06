@@ -1,0 +1,199 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kaspa-explorer
+  namespace: kaspa
+spec:
+  selector:
+    matchLabels:
+      app: next-kaspa-explorer
+  template:
+    metadata:
+      labels:
+        app: next-kaspa-explorer
+    spec:
+      containers:
+        - name: kaspa-explorer
+          env:
+            - name: API_URI
+              value: https://next-explorer-api.kasia.fyi
+            - name: API_WS_URI
+              value: wss://next-explorer-ws.kasia.fyi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspa-explorer
+  labels:
+    app: next-kaspa-explorer
+  namespace: kaspa
+spec:
+  selector:
+    app: next-kaspa-explorer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kaspa-rest-server
+  namespace: kaspa
+spec:
+  selector:
+    matchLabels:
+      app: next-kaspa-rest-server
+  template:
+    metadata:
+      labels:
+        app: next-kaspa-rest-server
+    spec:
+      containers:
+        - name: kaspa-rest-server
+          env:
+            - name: KASPAD_WRPC_URL
+              value: ws://next-kaspad-external:17210
+            - name: NETWORK_TYPE
+              value: testnet
+            - name: KASPAD_HOST_1
+              value: next-kaspad-public-rpc-lb:16113
+            - name: SQL_URI
+              value: postgresql+asyncpg://postgres:postgres@next-kaspa-db:5432/postgres
+            - name: HASHRATE_HISTORY
+              value: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspa-rest-server
+  labels:
+    app: next-kaspa-rest-server
+  namespace: kaspa
+spec:
+  selector:
+    app: next-kaspa-rest-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simply-kaspa-socket-server
+  namespace: kaspa
+spec:
+  selector:
+    matchLabels:
+      app: next-simply-kaspa-socket-server
+  template:
+    metadata:
+      labels:
+        app: next-simply-kaspa-socket-server
+    spec:
+      containers:
+        - name: simply-kaspa-socket-server
+          args:
+            - --network
+            - testnet-12
+            - -x
+            - "20"
+            - -s
+            - ws://next-kaspad-external:17210
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simply-kaspa-socket-server
+  labels:
+    app: next-simply-kaspa-socket-server
+  namespace: kaspa
+spec:
+  selector:
+    app: next-simply-kaspa-socket-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simply-kaspa-indexer
+  namespace: kaspa
+spec:
+  selector:
+    matchLabels:
+      app: next-simply-kaspa-indexer
+  template:
+    metadata:
+      labels:
+        app: next-simply-kaspa-indexer
+    spec:
+      containers:
+        - name: simply-kaspa-indexer
+          args:
+            - --network
+            - testnet-12
+            - -u
+            - -s
+            - ws://next-kaspad-external:17210
+            - -d
+            - postgresql://postgres:postgres@next-kaspa-db:5432/postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspa-db
+  labels:
+    app: next-kaspa-db
+  namespace: kaspa
+spec:
+  selector:
+    app: next-kaspa-db
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kaspa-db
+  namespace: kaspa
+spec:
+  serviceName: next-kaspa-db
+  selector:
+    matchLabels:
+      app: next-kaspa-db
+  template:
+    metadata:
+      labels:
+        app: next-kaspa-db
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kaspa-explorer
+  namespace: kaspa
+spec:
+  routes:
+    - match: Host(`next-explorer.kasia.fyi`)
+      kind: Rule
+      services:
+        - name: next-kaspa-explorer
+          kind: Service
+          port: 8080
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kaspa-rest-server
+  namespace: kaspa
+spec:
+  routes:
+    - match: Host(`next-explorer-api.kasia.fyi`)
+      kind: Rule
+      services:
+        - name: next-kaspa-rest-server
+          kind: Service
+          port: 8000
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: simply-kaspa-socket-server
+  namespace: kaspa
+spec:
+  routes:
+    - match: Host(`next-explorer-ws.kasia.fyi`)
+      kind: Rule
+      services:
+        - name: next-simply-kaspa-socket-server
+          kind: Service
+          port: 8000

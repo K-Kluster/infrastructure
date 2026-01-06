@@ -9,3 +9,5 @@ resources:
   - ./indexer/mainnet/app.yaml
   - ./indexer/testnet/app.yaml
   - ./indexer/next/app.yaml
+  # Explorers
+  - ./explorer/next/app.yaml

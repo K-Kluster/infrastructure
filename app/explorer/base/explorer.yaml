@@ -1,0 +1,233 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspa-explorer
+  labels:
+    app: kaspa-explorer
+  namespace: kaspa
+spec:
+  type: ClusterIP
+  selector:
+    app: kaspa-explorer
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kaspa-explorer
+  namespace: kaspa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kaspa-explorer
+  template:
+    metadata:
+      labels:
+        app: kaspa-explorer
+    spec:
+      containers:
+        - name: kaspa-explorer
+          image: supertypo/kaspa-explorer:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: API_URI
+              value: http://kaspa-rest-server:8000
+            - name: API_WS_URI
+              value: ws://simply-kaspa-socket-server:8000
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspa-rest-server
+  labels:
+    app: kaspa-rest-server
+  namespace: kaspa
+spec:
+  type: ClusterIP
+  selector:
+    app: kaspa-rest-server
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kaspa-rest-server
+  namespace: kaspa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kaspa-rest-server
+  template:
+    metadata:
+      labels:
+        app: kaspa-rest-server
+    spec:
+      containers:
+        - name: kaspa-rest-server
+          image: kaspanet/kaspa-rest-server:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KASPAD_HOST_1
+              value: next-kaspad-external:17210
+            - name: SQL_URI
+              value: postgresql+asyncpg://postgres:postgres@kaspa-db:5432/postgres
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simply-kaspa-socket-server
+  labels:
+    app: simply-kaspa-socket-server
+  namespace: kaspa
+spec:
+  type: ClusterIP
+  selector:
+    app: simply-kaspa-socket-server
+  ports:
+    - name: ws
+      port: 8000
+      targetPort: 8000
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simply-kaspa-socket-server
+  namespace: kaspa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simply-kaspa-socket-server
+  template:
+    metadata:
+      labels:
+        app: simply-kaspa-socket-server
+    spec:
+      containers:
+        - name: simply-kaspa-socket-server
+          image: supertypo/simply-kaspa-socket-server:unstable
+          imagePullPolicy: IfNotPresent
+          args:
+            - -x
+            - "20"
+            - -s
+            - ws://next-kaspad-external:17210
+          ports:
+            - name: ws
+              containerPort: 8000
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simply-kaspa-indexer
+  namespace: kaspa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simply-kaspa-indexer
+  template:
+    metadata:
+      labels:
+        app: simply-kaspa-indexer
+    spec:
+      containers:
+        - name: simply-kaspa-indexer
+          image: kkluster/simply-kaspa-indexer:covpp
+          imagePullPolicy: IfNotPresent
+          args:
+            - -u
+            - -s
+            - ws://next-kaspad-external:17210
+            - -d
+            - postgresql://postgres:postgres@kaspa-db:5432/postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspa-db
+  labels:
+    app: kaspa-db
+  namespace: kaspa
+spec:
+  type: ClusterIP
+  selector:
+    app: kaspa-db
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kaspa-db
+  namespace: kaspa
+spec:
+  serviceName: kaspa-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kaspa-db
+  template:
+    metadata:
+      labels:
+        app: kaspa-db
+    spec:
+      containers:
+        - name: kaspa-db
+          image: postgres:16-alpine
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: postgres
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          ports:
+            - name: postgres
+              containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+            - name: shm
+              mountPath: /dev/shm
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 4Gi
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 200Gi

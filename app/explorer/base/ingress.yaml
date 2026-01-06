@@ -1,0 +1,46 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kaspa-explorer
+  namespace: kaspa
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`explorer.kasia.fyi`)
+      kind: Rule
+      services:
+        - name: kaspa-explorer
+          kind: Service
+          port: 8080
+  tls: {}
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kaspa-rest-server
+  namespace: kaspa
+spec:
+  routes:
+    - match: Host(`explorer-api.kasia.fyi`)
+      kind: Rule
+      services:
+        - name: kaspa-rest-server
+          kind: Service
+          port: 8000
+  tls: {}
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: simply-kaspa-socket-server
+  namespace: kaspa
+spec:
+  routes:
+    - match: Host(`explorer-ws.kasia.fyi`)
+      kind: Rule
+      services:
+        - name: simply-kaspa-socket-server
+          kind: Service
+          port: 8000
+  tls: {}
