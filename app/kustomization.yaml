@@ -5,6 +5,8 @@ resources:
   - ./node/mainnet/app.yaml
   - ./node/testnet/app.yaml
   - ./node/next/app.yaml
+  - ./node/tn12reset/app.yaml
+
   # Indexers
   - ./indexer/mainnet/app.yaml
   - ./indexer/testnet/app.yaml

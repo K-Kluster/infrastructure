@@ -1,0 +1,29 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kaspad
+  namespace: kaspa
+spec:
+  routes:
+    - match: Host(`tn12reset-wrpc.kasia.fyi`)
+      kind: Rule
+      services:
+        - name: tn12reset-kaspad-external
+          kind: Service
+          port: 17218
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspad-external
+  namespace: kaspa
+  labels:
+    app: tn12reset-kaspad
+spec:
+  selector:
+    app: tn12reset-kaspad
+  ports:
+    - name: wrpc-borsh
+      port: 17218
+      targetPort: 17218
+      protocol: TCP

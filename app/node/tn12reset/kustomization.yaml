@@ -1,0 +1,9 @@
+resources:
+  - ../base
+  - ./public-rpc.yaml
+
+patches:
+  - path: ./patch-ingress.yaml
+  - path: ./patch-kaspad.yaml
+
+namePrefix: tn12reset-

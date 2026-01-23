@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tn12reset-kaspad-public-rpc-lb
+  namespace: kaspa
+  labels:
+    app: tn12reset-kaspad
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  selector:
+    app: tn12reset-kaspad
+  ports:
+    - name: rpc
+      protocol: TCP
+      port: 16114
+      targetPort: 16114
