@@ -1,6 +1,7 @@
 resources:
   - ../base
   - ./public-rpc.yaml
+  - ./override-params-configmap.yaml
 
 patches:
   - path: ./patch-ingress.yaml
