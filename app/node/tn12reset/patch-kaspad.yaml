@@ -16,6 +16,7 @@ spec:
       containers:
         - name: kaspad
           image: kkluster/rusty-kaspa:covid
+          imagePullPolicy: Always
           args:
             - kaspad
             - --yes
