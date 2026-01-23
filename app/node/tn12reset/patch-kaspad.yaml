@@ -29,6 +29,7 @@ spec:
             - --rpclisten-borsh=0.0.0.0:17218
             - --rpclisten-json=0.0.0.0:18114
             - --externalip=$(NODE_IP)
+            - --override-params-file=/app/override/params.json
           ports:
             - name: rpc
               containerPort: 16114
@@ -39,6 +40,11 @@ spec:
             - name: wrpc-json
               containerPort: 18114
               protocol: TCP
+          volumeMounts:
+            - name: override-params
+              mountPath: /app/override/params.json
+              subPath: params.json
+              readOnly: true
           readinessProbe:
             tcpSocket:
               port: 16114
@@ -49,6 +55,10 @@ spec:
               port: 16114
             initialDelaySeconds: 30
             periodSeconds: 20
+      volumes:
+        - name: override-params
+          configMap:
+            name: kaspad-override-params
 
   volumeClaimTemplates:
     - metadata:
@@ -59,6 +69,17 @@ spec:
         resources:
           requests:
             storage: 200Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kaspad-override-params
+  namespace: kaspa
+data:
+  params.json: |-
+    {
+      "covenants_activation": 0
+    }
 ---
 apiVersion: v1
 kind: Service
