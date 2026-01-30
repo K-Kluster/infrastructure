@@ -27,7 +27,3 @@ spec:
       port: 17210
       targetPort: 17210
       protocol: TCP
-    - name: rpc
-      port: 16311
-      targetPort: 16311
-      protocol: TCP
