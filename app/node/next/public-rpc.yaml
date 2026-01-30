@@ -13,5 +13,5 @@ spec:
   ports:
     - name: rpc
       protocol: TCP
-      port: 16311
-      targetPort: 16311
+      port: 16322
+      targetPort: 16322
