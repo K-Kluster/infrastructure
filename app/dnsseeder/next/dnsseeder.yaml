@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kaspa-dnsseeder-data
+  namespace: kaspa
+  labels:
+    app: kaspa-dnsseeder
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kaspa-dnsseeder
+  namespace: kaspa
+  labels:
+    app: kaspa-dnsseeder
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kaspa-dnsseeder
+  template:
+    metadata:
+      labels:
+        app: kaspa-dnsseeder
+    spec:
+      containers:
+        - name: dnsseeder
+          image: ghcr.io/elldeeone/rusty-dnsseeder:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - -H
+            - tn12-dnsseed.kasia.fyi
+            - -n
+            - ns-tn12-dnsseed.kasia.fyi
+            - -l
+            - 0.0.0.0:5354
+            - -s
+            - next-kaspad:16311
+            - --testnet
+            - --netsuffix=12
+            - --appdir=/data
+            - --nologfiles
+          ports:
+            - name: dns
+              containerPort: 5354
+              protocol: UDP
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: kaspa-dnsseeder-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspa-dnsseeder
+  namespace: kaspa
+  labels:
+    app: kaspa-dnsseeder
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  selector:
+    app: kaspa-dnsseeder
+  ports:
+    - name: dns
+      port: 53
+      targetPort: 5354
+      protocol: UDP

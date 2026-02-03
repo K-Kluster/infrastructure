@@ -13,3 +13,5 @@ resources:
   - ./indexer/next/app.yaml
   # Explorers
   - ./explorer/next/app.yaml
+  # DNS Seeder
+  - ./dnsseeder/next/app.yaml
