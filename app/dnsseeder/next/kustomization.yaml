@@ -1,2 +1,3 @@
 resources:
   - ./dnsseeder.yaml
+  - ./ingress-udp.yaml
