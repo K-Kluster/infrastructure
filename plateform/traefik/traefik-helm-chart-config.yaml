@@ -12,8 +12,3 @@ spec:
       traefik:
         expose:
           default: true
-      dns:
-        port: 53
-        protocol: UDP
-        expose:
-          default: true
