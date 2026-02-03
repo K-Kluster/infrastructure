@@ -1,8 +1,0 @@
-resources:
-  - ../base
-
-patches:
-  - path: ./patch-ingress.yaml
-  - path: ./patch-kaspad.yaml
-
-namePrefix: dev-
