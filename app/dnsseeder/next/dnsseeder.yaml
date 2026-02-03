@@ -69,11 +69,12 @@ metadata:
   labels:
     app: kaspa-dnsseeder
 spec:
-  type: ClusterIP
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
     app: kaspa-dnsseeder
   ports:
     - name: dns
-      port: 5354
+      port: 53
       targetPort: 5354
       protocol: UDP
