@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: dnsseeder
-          image: ghcr.io/elldeeone/rusty-dnsseeder:latest
+          image: ghcr.io/elldeeone/rusty-dnsseeder:0.1.1
           imagePullPolicy: IfNotPresent
           args:
             - -H
