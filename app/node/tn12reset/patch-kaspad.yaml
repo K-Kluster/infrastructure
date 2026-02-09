@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: kaspad
-          image: kkluster/rusty-kaspa:covid
+          image: kkluster/rusty-kaspa:covpp-reset1
           imagePullPolicy: Always
           args:
             - /app/kaspad
@@ -25,14 +25,15 @@ spec:
             - --enable-unsynced-mining
             - --utxoindex
             - --devnet
-            - --rpclisten=0.0.0.0:16114
+            - --rpclisten=0.0.0.0:16311
             - --rpclisten-borsh=0.0.0.0:17218
             - --rpclisten-json=0.0.0.0:18114
             - --externalip=$(NODE_IP)
+            - --addpeer=23.118.8.168
             - --override-params-file=/app/override/params.json
           ports:
             - name: rpc
-              containerPort: 16114
+              containerPort: 16311
               protocol: TCP
             - name: wrpc-borsh
               containerPort: 17218
@@ -47,12 +48,12 @@ spec:
               readOnly: true
           readinessProbe:
             tcpSocket:
-              port: 16114
+              port: 16311
             initialDelaySeconds: 10
             periodSeconds: 10
           livenessProbe:
             tcpSocket:
-              port: 16114
+              port: 16311
             initialDelaySeconds: 30
             periodSeconds: 20
       volumes:
@@ -68,7 +69,7 @@ spec:
         storageClassName: longhorn
         resources:
           requests:
-            storage: 200Gi
+            storage: 300Gi
 ---
 apiVersion: v1
 kind: Service
