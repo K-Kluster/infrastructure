@@ -3,7 +3,6 @@ resources:
   - ./app.yaml
   # Kaspa Nodes
   - ./node/mainnet/app.yaml
-  - ./node/testnet/app.yaml
   - ./node/next/app.yaml
   - ./node/tn12reset/app.yaml
 
