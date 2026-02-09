@@ -24,13 +24,13 @@ spec:
             - --disable-upnp
             - --enable-unsynced-mining
             - --utxoindex
-            - --devnet
-            - --rpclisten=0.0.0.0:16311
+            - --testnet
+            - --netsuffix=12
+            - --rpclisten=0.0.0.0:16312
             - --rpclisten-borsh=0.0.0.0:17218
             - --rpclisten-json=0.0.0.0:18114
             - --externalip=$(NODE_IP)
             - --addpeer=23.118.8.168
-            - --override-params-file=/app/override/params.json
           ports:
             - name: rpc
               containerPort: 16311
@@ -41,11 +41,6 @@ spec:
             - name: wrpc-json
               containerPort: 18114
               protocol: TCP
-          volumeMounts:
-            - name: override-params
-              mountPath: /app/override/params.json
-              subPath: params.json
-              readOnly: true
           readinessProbe:
             tcpSocket:
               port: 16311
@@ -56,10 +51,6 @@ spec:
               port: 16311
             initialDelaySeconds: 30
             periodSeconds: 20
-      volumes:
-        - name: override-params
-          configMap:
-            name: kaspad-override-params
 
   volumeClaimTemplates:
     - metadata:
