@@ -36,6 +36,11 @@ spec:
         - name: dnsseeder
           image: ghcr.io/elldeeone/rusty-dnsseeder:0.1.1
           imagePullPolicy: IfNotPresent
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
           args:
             - -H
             - tn12-dnsseed.kasia.fyi
@@ -44,15 +49,18 @@ spec:
             - -l
             - 0.0.0.0:5354
             - -s
-            - next-kaspad:16311
+            - $(NODE_IP):16311
             - --testnet
             - --netsuffix=12
             - --appdir=/data
             - --nologfiles
           ports:
-            - name: dns
+            - name: dns-udp
               containerPort: 5354
               protocol: UDP
+            - name: dns-tcp
+              containerPort: 5354
+              protocol: TCP
           volumeMounts:
             - name: data
               mountPath: /data
@@ -74,7 +82,11 @@ spec:
   selector:
     app: kaspa-dnsseeder
   ports:
-    - name: dns
+    - name: dns-udp
       port: 53
       targetPort: 5354
       protocol: UDP
+    - name: dns-tcp
+      port: 53
+      targetPort: 5354
+      protocol: TCP
