@@ -32,6 +32,9 @@ spec:
             - --externalip=$(NODE_IP)
             - --addpeer=23.118.8.168
           ports:
+            - name: grpc
+              containerPort: 16312
+              protocol: TCP
             - name: rpc
               containerPort: 16311
               protocol: TCP
