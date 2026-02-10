@@ -1,6 +1,7 @@
 resources:
   - ../base
   - ./public-rpc.yaml
+  - ./ingress-grpc-tcp.yaml
 
 patches:
   - path: ./patch-ingress.yaml

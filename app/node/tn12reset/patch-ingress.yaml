@@ -11,13 +11,6 @@ spec:
         - name: tn12reset-kaspad-external
           kind: Service
           port: 17218
-    - match: Host(`tn12reset-grpc.kasia.fyi`)
-      kind: Rule
-      services:
-        - name: tn12reset-kaspad-external
-          kind: Service
-          port: 16312
-          scheme: h2c
 ---
 apiVersion: v1
 kind: Service
