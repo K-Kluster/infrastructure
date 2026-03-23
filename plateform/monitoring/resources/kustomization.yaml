@@ -5,6 +5,7 @@ resources:
   - ./monitoring-rules.yaml
   - ./grafana-dashboard-longhorn.yaml
   - ./grafana-dashboard-pod-io.yaml
+  - ./grafana-ingressroute.yaml
 
 generators:
   - ./secret-generator.yaml
