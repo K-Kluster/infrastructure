@@ -1,0 +1,10 @@
+namespace: monitoring
+
+resources:
+  - ./longhorn-servicemonitor.yaml
+  - ./monitoring-rules.yaml
+  - ./grafana-dashboard-longhorn.yaml
+  - ./grafana-dashboard-pod-io.yaml
+
+generators:
+  - ./secret-generator.yaml

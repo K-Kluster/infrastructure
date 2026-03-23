@@ -1,0 +1,119 @@
+alertmanager:
+  enabled: false
+
+defaultRules:
+  rules:
+    alertmanager: false
+    etcd: false
+    kubeControllerManager: false
+    kubeProxy: false
+    kubeSchedulerAlerting: false
+    kubeSchedulerRecording: false
+
+grafana:
+  admin:
+    existingSecret: grafana-admin
+    userKey: admin-user
+    passwordKey: admin-password
+  persistence:
+    enabled: true
+    type: sts
+    storageClassName: longhorn
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+    finalizers:
+      - kubernetes.io/pvc-protection
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+  service:
+    type: ClusterIP
+  grafana.ini:
+    server:
+      root_url: "%(protocol)s://%(domain)s/"
+    security:
+      allow_embedding: true
+
+kubeControllerManager:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubelet:
+  serviceMonitor:
+    interval: 30s
+    scrapeTimeout: 10s
+    cAdvisor: true
+    cAdvisorMetricRelabelings:
+      - sourceLabels:
+          - __name__
+        action: drop
+        regex: "container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)"
+      - sourceLabels:
+          - __name__
+        action: drop
+        regex: "container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)"
+      - sourceLabels:
+          - __name__
+        action: drop
+        regex: "container_memory_(mapped_file|swap)"
+      - sourceLabels:
+          - __name__
+        action: drop
+        regex: "container_(file_descriptors|tasks_state|threads_max)"
+      - sourceLabels:
+          - __name__
+          - scope
+        action: drop
+        regex: "container_memory_failures_total;hierarchy"
+      - sourceLabels:
+          - __name__
+          - interface
+        action: drop
+        regex: "container_network_.*;(cali|cilium|cni|lxc|nodelocaldns|tunl).*"
+      - sourceLabels:
+          - __name__
+        action: drop
+        regex: "container_spec.*"
+      - sourceLabels:
+          - id
+          - pod
+        action: drop
+        regex: ".+;"
+      - action: labeldrop
+        regex: "id|image|name|uid"
+
+prometheus:
+  prometheusSpec:
+    evaluationInterval: 30s
+    resources:
+      requests:
+        cpu: 500m
+        memory: 2Gi
+      limits:
+        cpu: "2"
+        memory: 6Gi
+    retention: 30d
+    retentionSize: 40GiB
+    scrapeInterval: 30s
+    scrapeTimeout: 10s
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: longhorn
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 50Gi

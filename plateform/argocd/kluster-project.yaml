@@ -14,6 +14,8 @@ spec:
     - "https://github.com/K-Kluster/infrastructure.git"
     # minio operator
     - "https://github.com/minio/operator.git"
+    # monitoring
+    - "https://prometheus-community.github.io/helm-charts"
   destinations:
     # only allow to deploy on this cluster, but in any namespaces
     - namespace: "*"

@@ -1,0 +1,48 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: monitoring-storage-rules
+  namespace: monitoring
+  labels:
+    release: monitoring
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  groups:
+    - name: longhorn-volume.rules
+      interval: 30s
+      rules:
+        - record: longhorn:volume_read_iops
+          expr: longhorn_volume_read_iops
+        - record: longhorn:volume_write_iops
+          expr: longhorn_volume_write_iops
+        - record: longhorn:volume_read_throughput_mib_per_second
+          expr: longhorn_volume_read_throughput / 1024 / 1024
+        - record: longhorn:volume_write_throughput_mib_per_second
+          expr: longhorn_volume_write_throughput / 1024 / 1024
+        - record: longhorn:volume_read_latency_ms
+          expr: longhorn_volume_read_latency / 1000000
+        - record: longhorn:volume_write_latency_ms
+          expr: longhorn_volume_write_latency / 1000000
+        - record: longhorn:volume_capacity_bytes
+          expr: longhorn_volume_capacity_bytes
+        - record: longhorn:volume_used_bytes
+          expr: longhorn_volume_actual_size_bytes
+        - record: longhorn:volume_degraded
+          expr: max by (pvc_namespace, pvc, volume) (longhorn_volume_robustness{state="degraded"})
+        - record: longhorn:volume_read_only
+          expr: max by (pvc_namespace, pvc, volume) (longhorn_volume_file_system_read_only)
+    - name: pod-io.rules
+      interval: 30s
+      rules:
+        - record: namespace_pod:container_fs_reads_per_second:rate5m
+          expr: sum by (namespace, pod) (rate(container_fs_reads_total{namespace!="",pod!="",container!="",container!="POD"}[5m]))
+        - record: namespace_pod:container_fs_writes_per_second:rate5m
+          expr: sum by (namespace, pod) (rate(container_fs_writes_total{namespace!="",pod!="",container!="",container!="POD"}[5m]))
+        - record: namespace_pod:container_blkio_read_bytes_per_second:rate5m
+          expr: sum by (namespace, pod) (rate(container_blkio_device_usage_total{namespace!="",pod!="",container!="",container!="POD",operation="Read"}[5m]))
+        - record: namespace_pod:container_blkio_write_bytes_per_second:rate5m
+          expr: sum by (namespace, pod) (rate(container_blkio_device_usage_total{namespace!="",pod!="",container!="",container!="POD",operation="Write"}[5m]))
+        - record: namespace_pod:container_fs_usage_bytes
+          expr: sum by (namespace, pod) (container_fs_usage_bytes{namespace!="",pod!="",container!="",container!="POD"})
