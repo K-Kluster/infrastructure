@@ -19,7 +19,7 @@ A declarative infrastructure repository that defines the entire Kasia platform a
 infrastructure/
 ├── app/                     # Application layer (Kaspa node & indexer)
 │   ├── indexer/             # Base + overlays for mainnet, next, testnet
-│   └── node/                # Base + overlays for mainnet and testnet
+│   └── node/                # Base + overlays for mainnet, and other variants
 └── plateform/               # Cluster-wide services
     ├── argocd/              # Argo CD installation & configuration
     ├── cert-manager/        # Certificate management with Cloudflare DNS
@@ -45,7 +45,7 @@ infrastructure/
 ## Architecture
 
 - **App-of-apps** — `plateform/plateform.yaml` and `app/app.yaml` are Argo CD `Application` objects that bootstrap the rest of the tree.
-- **Kustomize overlays** — `base/` contains common manifests; environment overlays (`mainnet`, `testnet`, `next`) apply patches.
+- **Kustomize overlays** — `base/` contains common manifests; environment overlays apply patches.
 - **Secrets via KSOPS** — `*.enc.yaml` files are encrypted with SOPS/AGE and rendered through KSOPS at deploy time.
 
 ---
@@ -110,14 +110,14 @@ kubectl apply -f app/app.yaml
 
 Argo CD will create:
 
-- **node** — Kaspa nodes with mainnet and testnet overlays
+- **node** — Kaspa nodes with mainnet, and other overlays
 - **indexer** — Kasia indexer StatefulSets, each pointed at the corresponding Kaspa node
 
 ### 5) Customize environments
 
 Use:
 
-- `app/node/{mainnet,testnet}` and
+- `app/node/{mainnet,devnet,tn12reset}` and
 - `app/indexer/{mainnet,next,testnet}`
 
 for overlay-specific patches (service names, URLs, resources, etc.).

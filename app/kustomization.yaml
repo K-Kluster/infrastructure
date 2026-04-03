@@ -3,7 +3,7 @@ resources:
   - ./app.yaml
   # Kaspa Nodes
   - ./node/mainnet/app.yaml
-  - ./node/next/app.yaml
+  - ./node/devnet/app.yaml
   - ./node/tn12reset/app.yaml
 
   # Indexers

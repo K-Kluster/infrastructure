@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kaspad-next
+  name: kaspad-devnet
   namespace: argocd
 spec:
   destination:
@@ -9,6 +9,6 @@ spec:
     server: https://kubernetes.default.svc
   project: kluster
   source:
-    path: app/node/next
+    path: app/node/devnet
     repoURL: https://github.com/K-Kluster/infrastructure.git
     targetRevision: main

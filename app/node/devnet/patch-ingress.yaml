@@ -5,12 +5,12 @@ metadata:
   namespace: kaspa
 spec:
   routes:
-    - match: Host(`tn12-wrpc.kasia.fyi`)
+    - match: Host(`devnet-wrpc.kasia.fyi`)
       kind: Rule
       services:
-        - name: next-kaspad-external
+        - name: devnet-kaspad-external
           kind: Service
-          port: 17210
+          port: 17610
 ---
 apiVersion: v1
 kind: Service
@@ -18,12 +18,16 @@ metadata:
   name: kaspad-external
   namespace: kaspa
   labels:
-    app: next-kaspad
+    app: devnet-kaspad
 spec:
   selector:
-    app: next-kaspad
+    app: devnet-kaspad
   ports:
     - name: wrpc-borsh
-      port: 17210
-      targetPort: 17210
+      port: 17610
+      targetPort: wrpc-borsh
+      protocol: TCP
+    - name: grpc
+      port: 16610
+      targetPort: grpc
       protocol: TCP

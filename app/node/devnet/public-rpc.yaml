@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspad-public-rpc-lb
+  namespace: kaspa
+  labels:
+    app: devnet-kaspad
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  selector:
+    app: devnet-kaspad
+  ports:
+    - name: grpc
+      protocol: TCP
+      port: 16610
+      targetPort: grpc
+    - name: rpc
+      protocol: TCP
+      port: 16611
+      targetPort: rpc

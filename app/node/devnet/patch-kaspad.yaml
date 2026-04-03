@@ -4,14 +4,14 @@ metadata:
   name: kaspad
   namespace: kaspa
 spec:
-  serviceName: next-kaspad
+  serviceName: devnet-kaspad
   selector:
     matchLabels:
-      app: next-kaspad
+      app: devnet-kaspad
   template:
     metadata:
       labels:
-        app: next-kaspad
+        app: devnet-kaspad
     spec:
       containers:
         - name: kaspad
@@ -21,35 +21,41 @@ spec:
             - --yes
             - --nologfiles
             - --disable-upnp
-            - --addpeer=82.166.83.140
+            - --devnet
             - --enable-unsynced-mining
             - --utxoindex
-            - --testnet
-            - --netsuffix=12
-            - --rpclisten=0.0.0.0:16322
-            - --rpclisten-borsh=0.0.0.0:17210
-            - --rpclisten-json=0.0.0.0:18113
-            - --externalip=$(NODE_IP):16322
+            - --rpclisten=0.0.0.0:16610
+            - --rpclisten-borsh=0.0.0.0:17610
+            - --rpclisten-json=0.0.0.0:18610
+            - --externalip=$(NODE_IP):16611
           ports:
+            - name: grpc
+              containerPort: 16610
+              protocol: TCP
             - name: rpc
-              containerPort: 16322
+              containerPort: 16611
               protocol: TCP
             - name: wrpc-borsh
-              containerPort: 17210
+              containerPort: 17610
               protocol: TCP
             - name: wrpc-json
-              containerPort: 18113
+              containerPort: 18610
               protocol: TCP
           readinessProbe:
             tcpSocket:
-              port: 16322
+              port: 16610
             initialDelaySeconds: 10
             periodSeconds: 10
           livenessProbe:
             tcpSocket:
-              port: 16322
+              port: 16610
             initialDelaySeconds: 30
             periodSeconds: 20
+          startupProbe:
+            tcpSocket:
+              port: 16610
+            periodSeconds: 10
+            failureThreshold: 60
 
   volumeClaimTemplates:
     - metadata:
@@ -67,7 +73,26 @@ metadata:
   name: kaspad
   namespace: kaspa
   labels:
-    app: next-kaspad
+    app: devnet-kaspad
 spec:
+  $patch: replace
+  clusterIP: None
   selector:
-    app: next-kaspad
+    app: devnet-kaspad
+  ports:
+    - name: grpc
+      port: 16610
+      targetPort: grpc
+      protocol: TCP
+    - name: rpc
+      port: 16611
+      targetPort: rpc
+      protocol: TCP
+    - name: wrpc-borsh
+      port: 17610
+      targetPort: wrpc-borsh
+      protocol: TCP
+    - name: wrpc-json
+      port: 18610
+      targetPort: wrpc-json
+      protocol: TCP

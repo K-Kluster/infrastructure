@@ -1,9 +1,10 @@
 resources:
   - ../base
   - ./public-rpc.yaml
+  - ./ingress-grpc-tcp.yaml
 
 patches:
   - path: ./patch-ingress.yaml
   - path: ./patch-kaspad.yaml
 
-namePrefix: next-
+namePrefix: devnet-
