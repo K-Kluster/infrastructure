@@ -48,10 +48,20 @@ metadata:
   labels:
     app: prod-kaspad
 spec:
+  $patch: replace
+  clusterIP: None
   selector:
     app: prod-kaspad
   ports:
     - name: rpc
-      port: 16111
+      port: 16110
       targetPort: rpc
+      protocol: TCP
+    - name: wrpc-borsh
+      port: 17110
+      targetPort: 17110
+      protocol: TCP
+    - name: wrpc-json
+      port: 18112
+      targetPort: 18112
       protocol: TCP
