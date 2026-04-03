@@ -16,9 +16,6 @@ spec:
       containers:
         - name: kaspad
           ports:
-            - name: grpc
-              containerPort: 16110
-              protocol: TCP
             - name: rpc
               containerPort: 16110
               protocol: TCP
@@ -28,6 +25,11 @@ spec:
             - name: wrpc-json
               containerPort: 18112
               protocol: TCP
+          startupProbe:
+            tcpSocket:
+              port: 16110
+            periodSeconds: 10
+            failureThreshold: 60
   volumeClaimTemplates:
     - metadata:
         name: data
@@ -48,3 +50,8 @@ metadata:
 spec:
   selector:
     app: prod-kaspad
+  ports:
+    - name: rpc
+      port: 16111
+      targetPort: rpc
+      protocol: TCP

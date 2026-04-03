@@ -37,260 +37,17 @@ data:
           },
           "fieldConfig": {
             "defaults": {
-              "unit": "ops"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 0
-          },
-          "id": 1,
-          "options": {
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom"
-            }
-          },
-          "targets": [
-            {
-              "expr": "longhorn_volume_read_iops{pvc_namespace=\"$namespace\",pvc=~\"$pvc\"}",
-              "legendFormat": "{{ pvc }}",
-              "refId": "A"
-            }
-          ],
-          "title": "Read IOPS",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "unit": "ops"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 0
-          },
-          "id": 2,
-          "options": {
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom"
-            }
-          },
-          "targets": [
-            {
-              "expr": "longhorn_volume_write_iops{pvc_namespace=\"$namespace\",pvc=~\"$pvc\"}",
-              "legendFormat": "{{ pvc }}",
-              "refId": "A"
-            }
-          ],
-          "title": "Write IOPS",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "unit": "Bps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 8
-          },
-          "id": 3,
-          "options": {
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom"
-            }
-          },
-          "targets": [
-            {
-              "expr": "longhorn_volume_read_throughput{pvc_namespace=\"$namespace\",pvc=~\"$pvc\"}",
-              "legendFormat": "{{ pvc }}",
-              "refId": "A"
-            }
-          ],
-          "title": "Read Throughput",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "unit": "Bps"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 8
-          },
-          "id": 4,
-          "options": {
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom"
-            }
-          },
-          "targets": [
-            {
-              "expr": "longhorn_volume_write_throughput{pvc_namespace=\"$namespace\",pvc=~\"$pvc\"}",
-              "legendFormat": "{{ pvc }}",
-              "refId": "A"
-            }
-          ],
-          "title": "Write Throughput",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "unit": "ms"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 16
-          },
-          "id": 5,
-          "options": {
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom"
-            }
-          },
-          "targets": [
-            {
-              "expr": "longhorn_volume_read_latency{pvc_namespace=\"$namespace\",pvc=~\"$pvc\"} / 1000000",
-              "legendFormat": "{{ pvc }}",
-              "refId": "A"
-            }
-          ],
-          "title": "Read Latency",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "unit": "ms"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 16
-          },
-          "id": 6,
-          "options": {
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom"
-            }
-          },
-          "targets": [
-            {
-              "expr": "longhorn_volume_write_latency{pvc_namespace=\"$namespace\",pvc=~\"$pvc\"} / 1000000",
-              "legendFormat": "{{ pvc }}",
-              "refId": "A"
-            }
-          ],
-          "title": "Write Latency",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "fieldConfig": {
-            "defaults": {
               "unit": "bytes"
             },
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
-            "w": 12,
+            "h": 5,
+            "w": 6,
             "x": 0,
-            "y": 24
+            "y": 0
           },
-          "id": 7,
-          "options": {
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom"
-            }
-          },
-          "targets": [
-            {
-              "expr": "longhorn_volume_actual_size_bytes{pvc_namespace=\"$namespace\",pvc=~\"$pvc\"}",
-              "legendFormat": "{{ pvc }} used",
-              "refId": "A"
-            },
-            {
-              "expr": "longhorn_volume_capacity_bytes{pvc_namespace=\"$namespace\",pvc=~\"$pvc\"}",
-              "legendFormat": "{{ pvc }} capacity",
-              "refId": "B"
-            }
-          ],
-          "title": "PVC Usage",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 24
-          },
-          "id": 8,
+          "id": 1,
           "options": {
             "colorMode": "value",
             "graphMode": "none",
@@ -307,18 +64,306 @@ data:
           },
           "targets": [
             {
-              "expr": "sum(longhorn_volume_robustness{pvc_namespace=\"$namespace\",pvc=~\"$pvc\",state=\"degraded\"})",
-              "legendFormat": "Degraded volumes",
+              "expr": "longhorn_volume_capacity_bytes{pvc_namespace=\"$namespace\",pvc=\"$pvc\"}",
+              "legendFormat": "Capacity",
+              "refId": "A"
+            }
+          ],
+          "title": "Capacity",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 0
+          },
+          "id": 2,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "value_and_name"
+          },
+          "targets": [
+            {
+              "expr": "longhorn_volume_actual_size_bytes{pvc_namespace=\"$namespace\",pvc=\"$pvc\"}",
+              "legendFormat": "Used",
+              "refId": "A"
+            }
+          ],
+          "title": "Used",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 0.7
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.9
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 0
+          },
+          "id": 3,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "value_and_name"
+          },
+          "targets": [
+            {
+              "expr": "longhorn_volume_actual_size_bytes{pvc_namespace=\"$namespace\",pvc=\"$pvc\"} / longhorn_volume_capacity_bytes{pvc_namespace=\"$namespace\",pvc=\"$pvc\"}",
+              "legendFormat": "Used %",
+              "refId": "A"
+            }
+          ],
+          "title": "Used %",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "1": {
+                      "text": "Healthy"
+                    },
+                    "2": {
+                      "text": "Degraded"
+                    },
+                    "3": {
+                      "text": "Faulted"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 2
+                  },
+                  {
+                    "color": "red",
+                    "value": 3
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 0
+          },
+          "id": 4,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "value_and_name"
+          },
+          "targets": [
+            {
+              "expr": "longhorn_volume_robustness{pvc_namespace=\"$namespace\",pvc=\"$pvc\"}",
+              "legendFormat": "Robustness",
+              "refId": "A"
+            }
+          ],
+          "title": "Robustness",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ops"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 5
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom"
+            }
+          },
+          "targets": [
+            {
+              "expr": "longhorn_volume_read_iops{pvc_namespace=\"$namespace\",pvc=\"$pvc\"}",
+              "legendFormat": "Read IOPS",
               "refId": "A"
             },
             {
-              "expr": "sum(longhorn_volume_file_system_read_only{pvc_namespace=\"$namespace\",pvc=~\"$pvc\"})",
-              "legendFormat": "Read-only volumes",
+              "expr": "longhorn_volume_write_iops{pvc_namespace=\"$namespace\",pvc=\"$pvc\"}",
+              "legendFormat": "Write IOPS",
               "refId": "B"
             }
           ],
-          "title": "Volume State",
-          "type": "stat"
+          "title": "IOPS",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "Bps"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 5
+          },
+          "id": 6,
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom"
+            }
+          },
+          "targets": [
+            {
+              "expr": "longhorn_volume_read_throughput{pvc_namespace=\"$namespace\",pvc=\"$pvc\"}",
+              "legendFormat": "Read Throughput",
+              "refId": "A"
+            },
+            {
+              "expr": "longhorn_volume_write_throughput{pvc_namespace=\"$namespace\",pvc=\"$pvc\"}",
+              "legendFormat": "Write Throughput",
+              "refId": "B"
+            }
+          ],
+          "title": "Throughput",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 13
+          },
+          "id": 7,
+          "options": {
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom"
+            }
+          },
+          "targets": [
+            {
+              "expr": "longhorn_volume_read_latency{pvc_namespace=\"$namespace\",pvc=\"$pvc\"} / 1000000",
+              "legendFormat": "Read Latency",
+              "refId": "A"
+            },
+            {
+              "expr": "longhorn_volume_write_latency{pvc_namespace=\"$namespace\",pvc=\"$pvc\"} / 1000000",
+              "legendFormat": "Write Latency",
+              "refId": "B"
+            }
+          ],
+          "title": "Latency",
+          "type": "timeseries"
         }
       ],
       "refresh": "30s",
@@ -341,36 +386,33 @@ data:
               "type": "prometheus",
               "uid": "prometheus"
             },
-            "definition": "label_values(longhorn_volume_read_iops, pvc_namespace)",
+            "definition": "label_values(longhorn_volume_capacity_bytes, pvc_namespace)",
             "label": "Namespace",
             "name": "namespace",
             "options": [],
             "query": {
-              "query": "label_values(longhorn_volume_read_iops, pvc_namespace)",
+              "query": "label_values(longhorn_volume_capacity_bytes, pvc_namespace)",
               "refId": "Prometheus-namespace"
             },
             "refresh": 1,
             "type": "query"
           },
           {
-            "allValue": ".*",
             "current": {
               "selected": true,
-              "text": "All",
-              "value": "$__all"
+              "text": "data-prod-kaspad-0",
+              "value": "data-prod-kaspad-0"
             },
             "datasource": {
               "type": "prometheus",
               "uid": "prometheus"
             },
-            "definition": "label_values(longhorn_volume_read_iops{pvc_namespace=\"$namespace\"}, pvc)",
-            "includeAll": true,
+            "definition": "label_values(longhorn_volume_capacity_bytes{pvc_namespace=\"$namespace\"}, pvc)",
             "label": "PVC",
-            "multi": true,
             "name": "pvc",
             "options": [],
             "query": {
-              "query": "label_values(longhorn_volume_read_iops{pvc_namespace=\"$namespace\"}, pvc)",
+              "query": "label_values(longhorn_volume_capacity_bytes{pvc_namespace=\"$namespace\"}, pvc)",
               "refId": "Prometheus-pvc"
             },
             "refresh": 1,
@@ -384,5 +426,5 @@ data:
       },
       "title": "Kaspa Longhorn Storage",
       "uid": "kaspa-longhorn-storage",
-      "version": 1
+      "version": 3
     }

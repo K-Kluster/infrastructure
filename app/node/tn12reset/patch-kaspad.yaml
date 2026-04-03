@@ -13,12 +13,25 @@ spec:
       labels:
         app: tn12reset-kaspad
     spec:
+      initContainers:
+        - name: volume-permissions
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - chown 100:101 /app/data
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
       containers:
         - name: kaspad
-          image: kkluster/rusty-kaspa:covpp-reset1
-          imagePullPolicy: Always
+          image: kkluster/rusty-kaspa:tn12
+          imagePullPolicy: IfNotPresent
           args:
             - /app/kaspad
+            - --appdir=/app/data
             - --yes
             - --nologfiles
             - --disable-upnp

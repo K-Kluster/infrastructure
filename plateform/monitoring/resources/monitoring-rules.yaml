@@ -30,7 +30,7 @@ spec:
         - record: longhorn:volume_used_bytes
           expr: longhorn_volume_actual_size_bytes
         - record: longhorn:volume_degraded
-          expr: max by (pvc_namespace, pvc, volume) (longhorn_volume_robustness{state="degraded"})
+          expr: longhorn_volume_robustness == bool 2
         - record: longhorn:volume_read_only
           expr: max by (pvc_namespace, pvc, volume) (longhorn_volume_file_system_read_only)
     - name: pod-io.rules
