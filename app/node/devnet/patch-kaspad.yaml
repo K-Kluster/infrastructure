@@ -16,8 +16,11 @@ spec:
       containers:
         - name: kaspad
           image: kkluster/rusty-kaspa:kip21
+          command:
+            - /sbin/tini
+            - --
+            - /app/kaspad
           args:
-            - kaspad
             - --yes
             - --nologfiles
             - --disable-upnp
