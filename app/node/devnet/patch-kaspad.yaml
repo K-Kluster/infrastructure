@@ -28,6 +28,7 @@ spec:
             - --rpclisten-borsh=0.0.0.0:17610
             - --rpclisten-json=0.0.0.0:18610
             - --externalip=$(NODE_IP):16611
+            - --override-params-file=/app/override/params.json
           ports:
             - name: grpc
               containerPort: 16610
@@ -41,6 +42,11 @@ spec:
             - name: wrpc-json
               containerPort: 18610
               protocol: TCP
+          volumeMounts:
+            - name: override-params
+              mountPath: /app/override/params.json
+              subPath: params.json
+              readOnly: true
           readinessProbe:
             tcpSocket:
               port: 16610
@@ -56,7 +62,10 @@ spec:
               port: 16610
             periodSeconds: 10
             failureThreshold: 60
-
+      volumes:
+        - name: override-params
+          configMap:
+            name: kaspad-override-params
   volumeClaimTemplates:
     - metadata:
         name: data
