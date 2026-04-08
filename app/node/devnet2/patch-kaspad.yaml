@@ -1,0 +1,126 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kaspad
+  namespace: kaspa
+spec:
+  serviceName: devnet2-kaspad
+  selector:
+    matchLabels:
+      app: devnet2-kaspad
+  template:
+    metadata:
+      labels:
+        app: devnet2-kaspad
+    spec:
+      initContainers:
+        - name: volume-permissions
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - chown 100:101 /app/data
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+      containers:
+        - name: kaspad
+          image: kkluster/rusty-kaspa:kip21
+          command:
+            - /sbin/tini
+            - --
+            - /app/kaspad
+          args:
+            - --appdir=/app/data
+            - --yes
+            - --nologfiles
+            - --disable-upnp
+            - --devnet
+            - --enable-unsynced-mining
+            - --utxoindex
+            - --rpclisten=0.0.0.0:16620
+            - --rpclisten-borsh=0.0.0.0:17620
+            - --rpclisten-json=0.0.0.0:18620
+            - --externalip=$(NODE_IP):16621
+            - --addpeer=devnet-kaspad.kaspa.svc.cluster.local:16611
+            - --override-params-file=/app/override/params.json
+          ports:
+            - name: grpc
+              containerPort: 16620
+              protocol: TCP
+            - name: rpc
+              containerPort: 16621
+              protocol: TCP
+            - name: wrpc-borsh
+              containerPort: 17620
+              protocol: TCP
+            - name: wrpc-json
+              containerPort: 18620
+              protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+            - name: override-params
+              mountPath: /app/override/params.json
+              subPath: params.json
+              readOnly: true
+          readinessProbe:
+            tcpSocket:
+              port: 16620
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 16620
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          startupProbe:
+            tcpSocket:
+              port: 16620
+            periodSeconds: 10
+            failureThreshold: 60
+      volumes:
+        - name: override-params
+          configMap:
+            name: kaspad-override-params
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 300Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspad
+  namespace: kaspa
+  labels:
+    app: devnet2-kaspad
+spec:
+  $patch: replace
+  clusterIP: None
+  selector:
+    app: devnet2-kaspad
+  ports:
+    - name: grpc
+      port: 16620
+      targetPort: grpc
+      protocol: TCP
+    - name: rpc
+      port: 16621
+      targetPort: rpc
+      protocol: TCP
+    - name: wrpc-borsh
+      port: 17620
+      targetPort: wrpc-borsh
+      protocol: TCP
+    - name: wrpc-json
+      port: 18620
+      targetPort: wrpc-json
+      protocol: TCP

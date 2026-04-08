@@ -1,0 +1,11 @@
+resources:
+  - ../base
+  - ./public-rpc.yaml
+  - ./ingress-grpc-tcp.yaml
+  - ./override-params-configmap.yaml
+
+patches:
+  - path: ./patch-ingress.yaml
+  - path: ./patch-kaspad.yaml
+
+namePrefix: devnet2-

@@ -4,6 +4,7 @@ resources:
   # Kaspa Nodes
   - ./node/mainnet/app.yaml
   - ./node/devnet/app.yaml
+  - ./node/devnet2/app.yaml
   - ./node/tn12reset/app.yaml
 
   # Indexers

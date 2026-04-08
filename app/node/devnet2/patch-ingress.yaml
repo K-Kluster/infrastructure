@@ -1,0 +1,33 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kaspad
+  namespace: kaspa
+spec:
+  routes:
+    - match: Host(`devnet2-wrpc.kasia.fyi`)
+      kind: Rule
+      services:
+        - name: devnet2-kaspad-external
+          kind: Service
+          port: 17620
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaspad-external
+  namespace: kaspa
+  labels:
+    app: devnet2-kaspad
+spec:
+  selector:
+    app: devnet2-kaspad
+  ports:
+    - name: wrpc-borsh
+      port: 17620
+      targetPort: wrpc-borsh
+      protocol: TCP
+    - name: grpc
+      port: 16620
+      targetPort: grpc
+      protocol: TCP
