@@ -31,21 +31,26 @@ spec:
           command:
             - /sbin/tini
             - --
-            - /app/kaspad
+            - /bin/sh
+            - -ec
           args:
-            - --appdir=/app/data
-            - --yes
-            - --nologfiles
-            - --disable-upnp
-            - --devnet
-            - --enable-unsynced-mining
-            - --utxoindex
-            - --rpclisten=0.0.0.0:16620
-            - --rpclisten-borsh=0.0.0.0:17620
-            - --rpclisten-json=0.0.0.0:18620
-            - --externalip=$(NODE_IP):16621
-            - --addpeer=devnet-kaspad.kaspa.svc.cluster.local:16611
-            - --override-params-file=/app/override/params.json
+            - |
+              peer_ip="$(getent ahostsv4 devnet-kaspad-0.devnet-kaspad.kaspa.svc.cluster.local | awk 'NR==1 { print $1 }')"
+              test -n "$peer_ip"
+              exec /app/kaspad \
+                --appdir=/app/data \
+                --yes \
+                --nologfiles \
+                --disable-upnp \
+                --devnet \
+                --enable-unsynced-mining \
+                --utxoindex \
+                --rpclisten=0.0.0.0:16620 \
+                --rpclisten-borsh=0.0.0.0:17620 \
+                --rpclisten-json=0.0.0.0:18620 \
+                --externalip=$(NODE_IP):16621 \
+                --addpeer="${peer_ip}:16611" \
+                --override-params-file=/app/override/params.json
           ports:
             - name: grpc
               containerPort: 16620
