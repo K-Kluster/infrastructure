@@ -55,7 +55,7 @@ infrastructure/
 ### Prerequisites
 
 - Kubernetes cluster (v1.24+) with cluster-admin access
-- `kubectl`, `kustomize` (or `kubectl kustomize`), and the Argo CD CLI
+- `kubectl`, standalone `kustomize`, and the Argo CD CLI
 - [SOPS](https://github.com/mozilla/sops) and an AGE key with access to the encrypted secrets
 - Optional: `helm`, `ksops`, and `argocd` CLI installed locally
 
@@ -65,8 +65,12 @@ infrastructure/
 git clone https://github.com/K-Kluster/infrastructure.git
 cd infrastructure
 
-# Point SOPS to your AGE private key
 export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+```
+
+```powershell
+# PowerShell
+$env:SOPS_AGE_KEY_FILE = "$HOME/.config/sops/age/keys.txt"
 ```
 
 Encrypted files are under `plateform/**/**/*.enc.yaml` and `plateform/argocd/github-repository.enc.yaml` (paths may vary by overlay).
@@ -77,7 +81,7 @@ Ensure your AGE key can decrypt them, or replace with your own.
 Apply the Argo CD installation and its config (including KSOPS):
 
 ```bash
-kubectl apply -k plateform/argocd
+kustomize build --enable-alpha-plugins --enable-exec plateform/argocd | kubectl apply -f -
 ```
 
 After the pods are ready, log in (either expose the service or port-forward):
@@ -136,7 +140,7 @@ Update images or configuration by editing the respective manifest and committing
 
 1. Fork the repo and create a feature branch.
 2. Modify manifests or overlays. Use `sops` for any secret changes.
-3. Validate locally with `kustomize build <path>`.
+3. Validate locally with `kustomize build --enable-alpha-plugins --enable-exec <path>`.
 4. Open a pull request describing the change.
 5. After merge, Argo CD syncs the cluster automatically.
 
