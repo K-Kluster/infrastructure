@@ -108,12 +108,7 @@ prometheus:
     retentionSize: 40GiB
     scrapeInterval: 30s
     scrapeTimeout: 10s
+    # Temporary workaround: Longhorn is currently faulting Prometheus volumes,
+    # so run on ephemeral node storage until the storage layer is repaired.
     storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: longhorn
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 50Gi
+      emptyDir: {}

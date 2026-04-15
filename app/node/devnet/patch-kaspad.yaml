@@ -32,6 +32,7 @@ spec:
             - --rpclisten-json=0.0.0.0:18610
             - --externalip=$(NODE_IP):16611
             - --override-params-file=/app/override/params.json
+            - --addpeer=66.23.234.250
           ports:
             - name: grpc
               containerPort: 16610

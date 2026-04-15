@@ -6,5 +6,17 @@ metadata:
 data:
   params.json: |-
     {
+      "blockrate": {
+        "target_time_per_block": 100,
+        "ghostdag_k": 124,
+        "past_median_time_sample_rate": 100,
+        "difficulty_sample_rate": 40,
+        "max_block_parents": 16,
+        "mergeset_size_limit": 248,
+        "merge_depth": 9000,
+        "finality_depth": 108000,
+        "pruning_depth": 270000,
+        "coinbase_maturity": 1000
+      },
       "covenants_activation": 0
     }
