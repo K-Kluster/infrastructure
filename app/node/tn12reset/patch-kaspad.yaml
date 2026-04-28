@@ -28,7 +28,7 @@ spec:
       containers:
         - name: kaspad
           image: kkluster/rusty-kaspa:tn12
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           args:
             - /app/kaspad
             - --appdir=/app/data

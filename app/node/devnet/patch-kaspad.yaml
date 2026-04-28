@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: kaspad
-          image: kkluster/rusty-kaspa:kip21
+          image: kkluster/rusty-kaspa:tn12-reset
           command:
             - /sbin/tini
             - --

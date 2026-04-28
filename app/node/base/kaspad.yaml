@@ -48,7 +48,7 @@ spec:
       containers:
         - name: kaspad
           image: supertypo/rusty-kaspad:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: RUST_BACKTRACE
               value: "1"
