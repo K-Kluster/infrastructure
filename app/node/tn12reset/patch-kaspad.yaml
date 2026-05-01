@@ -57,16 +57,24 @@ spec:
             - name: wrpc-json
               containerPort: 18114
               protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
           readinessProbe:
             tcpSocket:
-              port: 16311
+              port: 16312
             initialDelaySeconds: 10
             periodSeconds: 10
           livenessProbe:
             tcpSocket:
-              port: 16311
+              port: 16312
             initialDelaySeconds: 30
             periodSeconds: 20
+          startupProbe:
+            tcpSocket:
+              port: 16312
+            periodSeconds: 10
+            failureThreshold: 60
 
   volumeClaimTemplates:
     - metadata:
@@ -86,5 +94,24 @@ metadata:
   labels:
     app: tn12reset-kaspad
 spec:
+  $patch: replace
+  clusterIP: None
   selector:
     app: tn12reset-kaspad
+  ports:
+    - name: grpc
+      port: 16312
+      targetPort: grpc
+      protocol: TCP
+    - name: rpc
+      port: 16311
+      targetPort: rpc
+      protocol: TCP
+    - name: wrpc-borsh
+      port: 17218
+      targetPort: wrpc-borsh
+      protocol: TCP
+    - name: wrpc-json
+      port: 18114
+      targetPort: wrpc-json
+      protocol: TCP
