@@ -43,7 +43,8 @@ spec:
             - --rpclisten-borsh=0.0.0.0:17218
             - --rpclisten-json=0.0.0.0:18114
             - --externalip=$(NODE_IP)
-            - --addpeer=23.118.8.168,87.70.133.178
+            - --addpeer=23.118.8.168
+            - --addpeer=87.70.133.178
           ports:
             - name: grpc
               containerPort: 16312
