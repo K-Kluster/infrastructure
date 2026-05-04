@@ -27,7 +27,7 @@ spec:
               mountPath: /app/data
       containers:
         - name: kaspad
-          image: kkluster/rusty-kaspa:tn12
+          image: kkluster/rusty-kaspa:toccata-1
           imagePullPolicy: Always
           args:
             - /app/kaspad
@@ -45,6 +45,7 @@ spec:
             - --externalip=$(NODE_IP)
             - --addpeer=23.118.8.168
             - --addpeer=87.70.133.178
+            - --ua-rule=reject;ver:kaspad<1.1.1
           ports:
             - name: grpc
               containerPort: 16312
