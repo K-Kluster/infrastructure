@@ -60,10 +60,6 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /app/data
-            - name: override-params
-              mountPath: /app/override/params.json
-              subPath: params.json
-              readOnly: true
           readinessProbe:
             tcpSocket:
               port: 16620
@@ -79,10 +75,6 @@ spec:
               port: 16620
             periodSeconds: 10
             failureThreshold: 60
-      volumes:
-        - name: override-params
-          configMap:
-            name: kaspad-override-params
   volumeClaimTemplates:
     - metadata:
         name: data
