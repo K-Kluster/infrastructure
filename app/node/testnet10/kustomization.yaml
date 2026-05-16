@@ -8,4 +8,4 @@ patches:
   - path: ./patch-ingress.yaml
   - path: ./patch-kaspad.yaml
 
-namePrefix: devnet2-
+namePrefix: testnet10-

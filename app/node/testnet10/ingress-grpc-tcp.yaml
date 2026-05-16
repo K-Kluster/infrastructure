@@ -7,8 +7,8 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: HostSNI(`devnet2-grpc.kasia.fyi`)
+    - match: HostSNI(`testnet10-grpc.kasia.fyi`)
       services:
-        - name: devnet2-kaspad-external
+        - name: testnet10-kaspad-external
           port: 16620
   tls: {}

@@ -4,12 +4,12 @@ metadata:
   name: kaspad-public-rpc-lb
   namespace: kaspa
   labels:
-    app: devnet2-kaspad
+    app: testnet10-kaspad
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
   selector:
-    app: devnet2-kaspad
+    app: testnet10-kaspad
   ports:
     - name: grpc
       protocol: TCP

@@ -5,10 +5,10 @@ metadata:
   namespace: kaspa
 spec:
   routes:
-    - match: Host(`devnet2-wrpc.kasia.fyi`)
+    - match: Host(`testnet10-wrpc.kasia.fyi`)
       kind: Rule
       services:
-        - name: devnet2-kaspad-external
+        - name: testnet10-kaspad-external
           kind: Service
           port: 17620
 ---
@@ -18,10 +18,10 @@ metadata:
   name: kaspad-external
   namespace: kaspa
   labels:
-    app: devnet2-kaspad
+    app: testnet10-kaspad
 spec:
   selector:
-    app: devnet2-kaspad
+    app: testnet10-kaspad
   ports:
     - name: wrpc-borsh
       port: 17620

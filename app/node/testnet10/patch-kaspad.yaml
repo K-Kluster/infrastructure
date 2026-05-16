@@ -4,14 +4,14 @@ metadata:
   name: kaspad
   namespace: kaspa
 spec:
-  serviceName: devnet2-kaspad
+  serviceName: testnet10-kaspad
   selector:
     matchLabels:
-      app: devnet2-kaspad
+      app: testnet10-kaspad
   template:
     metadata:
       labels:
-        app: devnet2-kaspad
+        app: testnet10-kaspad
     spec:
       initContainers:
         - name: volume-permissions
@@ -27,30 +27,23 @@ spec:
               mountPath: /app/data
       containers:
         - name: kaspad
-          image: kkluster/rusty-kaspa:tn12-reset
+          image: kkluster/rusty-kaspa:vspcv2
           command:
             - /sbin/tini
             - --
-            - /bin/sh
-            - -ec
+            - /app/kaspad
           args:
-            - |
-              peer_ip="$(getent ahostsv4 devnet-kaspad-0.devnet-kaspad.kaspa.svc.cluster.local | awk 'NR==1 { print $1 }')"
-              test -n "$peer_ip"
-              exec /app/kaspad \
-                --appdir=/app/data \
-                --yes \
-                --nologfiles \
-                --disable-upnp \
-                --devnet \
-                --enable-unsynced-mining \
-                --utxoindex \
-                --rpclisten=0.0.0.0:16620 \
-                --rpclisten-borsh=0.0.0.0:17620 \
-                --rpclisten-json=0.0.0.0:18620 \
-                --externalip=$(NODE_IP):16621 \
-                --addpeer="${peer_ip}:16611" \
-                --override-params-file=/app/override/params.json
+            - --appdir=/app/data
+            - --yes
+            - --nologfiles
+            - --disable-upnp
+            - --testnet
+            - --netsuffix=10
+            - --utxoindex
+            - --rpclisten=0.0.0.0:16620
+            - --rpclisten-borsh=0.0.0.0:17620
+            - --rpclisten-json=0.0.0.0:18620
+            - --externalip=$(NODE_IP):16621
           ports:
             - name: grpc
               containerPort: 16620
@@ -98,7 +91,7 @@ spec:
         storageClassName: longhorn
         resources:
           requests:
-            storage: 300Gi
+            storage: 225Gi
 ---
 apiVersion: v1
 kind: Service
@@ -106,12 +99,12 @@ metadata:
   name: kaspad
   namespace: kaspa
   labels:
-    app: devnet2-kaspad
+    app: testnet10-kaspad
 spec:
   $patch: replace
   clusterIP: None
   selector:
-    app: devnet2-kaspad
+    app: testnet10-kaspad
   ports:
     - name: grpc
       port: 16620
