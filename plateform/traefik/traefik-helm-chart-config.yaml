@@ -8,7 +8,29 @@ spec:
     api:
       insecure: false
       dashboard: true
+    accessLog:
+      enabled: true
+      format: json
+      bufferingSize: 100
+      filters:
+        statusCodes: "400-599"
+      fields:
+        headers:
+          defaultMode: drop
+    metrics:
+      prometheus:
+        addRoutersLabels: true
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: "4"
+        memory: 2Gi
     ports:
       traefik:
         expose:
-          default: true
+          default: false
+    service:
+      spec:
+        externalTrafficPolicy: Local

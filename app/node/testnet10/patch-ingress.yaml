@@ -7,6 +7,9 @@ spec:
   routes:
     - match: Host(`testnet10-wrpc.kasia.fyi`)
       kind: Rule
+      middlewares:
+        - name: testnet10-wrpc-rate-limit
+        - name: testnet10-wrpc-inflight-limit
       services:
         - name: testnet10-kaspad-external
           kind: Service

@@ -1,0 +1,22 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: wrpc-rate-limit
+  namespace: kaspa
+spec:
+  rateLimit:
+    average: 120
+    burst: 240
+    sourceCriterion:
+      requestHost: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: wrpc-inflight-limit
+  namespace: kaspa
+spec:
+  inFlightReq:
+    amount: 1000
+    sourceCriterion:
+      requestHost: true
