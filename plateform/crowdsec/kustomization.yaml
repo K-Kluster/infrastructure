@@ -1,0 +1,7 @@
+resources:
+  - ./namespace.yaml
+  - ./longhorn-single-replica-storageclass.yaml
+  - ./crowdsec-helm-chart.yaml
+
+generators:
+  - ./secret-generator.yaml

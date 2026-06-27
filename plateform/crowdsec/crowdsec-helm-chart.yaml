@@ -1,0 +1,71 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: crowdsec
+  namespace: kube-system
+spec:
+  repo: https://crowdsecurity.github.io/helm-charts
+  chart: crowdsec
+  version: 0.24.0
+  targetNamespace: crowdsec
+  createNamespace: true
+  failurePolicy: reinstall
+  timeout: 10m
+  valuesContent: |-
+    container_runtime: containerd
+
+    config:
+      config.yaml.local: |
+        api:
+          client:
+            unregister_on_exit: true
+          server:
+            auto_registration:
+              enabled: true
+              token: "${REGISTRATION_TOKEN}"
+              allowed_ranges:
+                - "127.0.0.1/32"
+                - "10.0.0.0/8"
+                - "172.16.0.0/12"
+                - "192.168.0.0/16"
+
+    agent:
+      acquisition:
+        - namespace: kube-system
+          podName: traefik-*
+          program: traefik
+          poll_without_inotify: true
+      env:
+        - name: COLLECTIONS
+          value: "crowdsecurity/traefik"
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+
+    lapi:
+      env:
+        - name: BOUNCER_KEY_traefik
+          valueFrom:
+            secretKeyRef:
+              name: crowdsec-keys
+              key: BOUNCER_KEY_traefik
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+      persistentVolume:
+        data:
+          enabled: true
+          storageClassName: longhorn-single-replica
+          size: 1Gi
+        config:
+          enabled: true
+          storageClassName: longhorn-single-replica
+          size: 100Mi

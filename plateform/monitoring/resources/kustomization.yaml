@@ -2,8 +2,10 @@ namespace: monitoring
 
 resources:
   - ./longhorn-servicemonitor.yaml
+  - ./crowdsec-servicemonitor.yaml
   - ./monitoring-rules.yaml
   - ./grafana-dashboard-longhorn.yaml
+  - ./grafana-dashboard-crowdsec.yaml
   - ./grafana-dashboard-pod-io.yaml
   - ./grafana-ingressroute.yaml
 

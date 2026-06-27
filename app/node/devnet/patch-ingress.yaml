@@ -7,6 +7,10 @@ spec:
   routes:
     - match: Host(`devnet-wrpc.kasia.fyi`)
       kind: Rule
+      middlewares:
+        - name: devnet-wrpc-rate-limit
+        - name: devnet-wrpc-inflight-limit
+        - name: devnet-crowdsec-bouncer
       services:
         - name: devnet-kaspad-external
           kind: Service

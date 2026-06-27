@@ -1,3 +1,4 @@
 resources:
   - ./kaspad.yaml
   - ./ingress.yaml
+  - ./wrpc-middleware.yaml

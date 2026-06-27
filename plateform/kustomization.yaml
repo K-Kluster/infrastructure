@@ -3,6 +3,7 @@ resources:
   - ./argocd/app.yaml
   - ./cert-manager/app.yaml
   - ./monitoring/app.yaml
+  - ./crowdsec/app.yaml
   - ./traefik/app.yaml
   - ./system/app.yaml
   - ./longhorn/app.yaml

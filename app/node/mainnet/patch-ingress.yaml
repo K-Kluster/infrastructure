@@ -7,6 +7,10 @@ spec:
   routes:
     - match: Host(`wrpc.kasia.fyi`)
       kind: Rule
+      middlewares:
+        - name: prod-wrpc-rate-limit
+        - name: prod-wrpc-inflight-limit
+        - name: prod-crowdsec-bouncer
       services:
         - name: prod-kaspad-external
           kind: Service

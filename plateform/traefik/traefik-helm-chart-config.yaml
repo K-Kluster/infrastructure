@@ -8,15 +8,22 @@ spec:
     api:
       insecure: false
       dashboard: true
-    accessLog:
-      enabled: true
-      format: json
-      bufferingSize: 100
-      filters:
-        statusCodes: "400-599"
-      fields:
-        headers:
-          defaultMode: drop
+    additionalArguments:
+      - "--accesslog=true"
+      - "--accesslog.format=json"
+      - "--accesslog.bufferingsize=100"
+      - "--accesslog.filters.statuscodes=100-599"
+      - "--accesslog.fields.headers.defaultmode=drop"
+    experimental:
+      plugins:
+        bouncer:
+          moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+          version: v1.4.5
+    volumes:
+      - name: crowdsec-bouncer-key
+        mountPath: /etc/traefik/crowdsec
+        type: secret
+        secretName: crowdsec-bouncer-key
     metrics:
       prometheus:
         addRoutersLabels: true
@@ -26,7 +33,7 @@ spec:
         memory: 512Mi
       limits:
         cpu: "4"
-        memory: 2Gi
+        memory: 8Gi
     ports:
       traefik:
         expose:

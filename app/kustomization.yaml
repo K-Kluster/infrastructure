@@ -3,14 +3,14 @@ resources:
   - ./app.yaml
   # Kaspa Nodes
   - ./node/mainnet/app.yaml
-  - ./node/devnet/app.yaml
   - ./node/testnet10/app.yaml
-  - ./node/tn12reset/app.yaml
+  # - ./node/devnet/app.yaml
+  # - ./node/tn12reset/app.yaml
 
   # Indexers
   - ./indexer/mainnet/app.yaml
   - ./indexer/next/app.yaml
   # Explorers
-  - ./explorer/next/app.yaml
+  # - ./explorer/next/app.yaml
   # DNS Seeder
-  - ./dnsseeder/next/app.yaml
+  # - ./dnsseeder/next/app.yaml

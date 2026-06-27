@@ -1,0 +1,18 @@
+# included by apps (app-of-apps pattern)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crowdsec
+  namespace: argocd
+spec:
+  project: kluster
+  source:
+    repoURL: https://github.com/K-Kluster/infrastructure.git
+    targetRevision: main
+    path: plateform/crowdsec
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: crowdsec
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

@@ -7,6 +7,10 @@ spec:
   routes:
     - match: Host(`tn12reset-wrpc.kasia.fyi`)
       kind: Rule
+      middlewares:
+        - name: tn12reset-wrpc-rate-limit
+        - name: tn12reset-wrpc-inflight-limit
+        - name: tn12reset-crowdsec-bouncer
       services:
         - name: tn12reset-kaspad-external
           kind: Service

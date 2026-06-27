@@ -10,6 +10,7 @@ spec:
       middlewares:
         - name: testnet10-wrpc-rate-limit
         - name: testnet10-wrpc-inflight-limit
+        - name: testnet10-crowdsec-bouncer
       services:
         - name: testnet10-kaspad-external
           kind: Service
