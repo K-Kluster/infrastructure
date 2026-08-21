@@ -5,7 +5,7 @@ metadata:
   namespace: kaspa
 spec:
   routes:
-    - match: Host(`next-indexer.kasia.fyi`)
+    - match: Host(`next-indexer.kasia.fyi`) || Host(`dev-indexer.kasia.fyi`)
       kind: Rule
       services:
         - name: next-indexer-external
